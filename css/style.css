@@ -201,12 +201,6 @@ input:focus-visible,
   background: rgba(255, 255, 255, 0.42);
 }
 
-.mode-button--primary {
-  border-left: 3px solid var(--green);
-  background: var(--green-light);
-  padding-left: 12px;
-}
-
 .mode-button > span:first-child {
   min-width: 0;
 }
