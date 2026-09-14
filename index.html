@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="大学図書館・オープンアクセス・機関リポジトリについて、英語でとっさに話す練習ができるWebアプリです。">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta property="og:title" content="Academic Library English Sprint">
+  <meta property="og:description" content="学術情報流通について、自分の英語で声に出すためのスピーキング練習。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="本と会話をモチーフにしたAcademic Library English Sprintのイラスト">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Academic Library English Sprint</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J6NS8CCNWN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-J6NS8CCNWN");
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+
+  <div class="app-shell">
+    <header class="site-header">
+      <button class="brand-button" id="home-button" type="button" aria-label="トップ画面へ戻る">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-name">Academic Library<br>English Sprint</span>
+      </button>
+      <div class="progress-summary" id="header-stats" aria-live="polite">Practiced 0 / 50</div>
+    </header>
+
+    <main id="main">
+      <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
+        <div class="intro">
+          <p class="eyebrow">Speaking practice for academic libraries</p>
+          <h1 id="home-title">英語で、とっさに<br>話すための小さな練習。</h1>
+          <p class="intro-copy">大学図書館・オープンアクセス・機関リポジトリについて、短く英語で話す練習です。</p>
+          <p class="intro-note">正解を暗記する必要はありません。まず、自分の英語で声に出してみましょう。</p>
+        </div>
+
+        <div class="start-panel" aria-labelledby="start-title">
+          <div class="section-heading">
+            <p class="section-kicker">Today’s practice</p>
+            <h2 id="start-title">練習を始める</h2>
+          </div>
+
+          <div class="mode-grid">
+            <button class="mode-button mode-button--primary" id="start-ten" type="button">
+              <span class="mode-icon" aria-hidden="true">10</span>
+              <span><strong>10問だけ</strong><small>短時間でランダムに</small></span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="mode-button" id="start-all" type="button">
+              <span class="mode-icon mode-icon--all" aria-hidden="true">50</span>
+              <span><strong>すべて</strong><small>全50問を通して</small></span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="mode-button" id="start-hard" type="button">
+              <span class="mode-icon mode-icon--review" aria-hidden="true">↺</span>
+              <span><strong>苦手だけ</strong><small>「出なかった」を復習</small></span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="category-start">
+            <label for="category-select">カテゴリから選ぶ</label>
+            <div class="category-row">
+              <select id="category-select" aria-label="練習するカテゴリ"></select>
+              <button class="compact-button" id="start-category" type="button">始める</button>
+            </div>
+          </div>
+
+          <label class="shuffle-option">
+            <input id="shuffle-option" type="checkbox" checked>
+            <span class="check-control" aria-hidden="true"></span>
+            <span>問題の順番をシャッフルする</span>
+          </label>
+
+          <p class="empty-message" id="home-message" role="status" hidden></p>
+        </div>
+
+        <aside class="home-progress" aria-labelledby="progress-title">
+          <div>
+            <p class="section-kicker">Your record</p>
+            <h2 id="progress-title">これまでの練習</h2>
+          </div>
+          <div class="record-total" id="record-total">Practiced 0 / 50</div>
+          <dl class="record-breakdown">
+            <div><dt>すぐ言えた</dt><dd id="record-easy">0</dd></div>
+            <div><dt>少し考えた</dt><dd id="record-ok">0</dd></div>
+            <div><dt>出なかった</dt><dd id="record-hard">0</dd></div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="screen practice-screen" id="practice-screen" aria-labelledby="practice-prompt">
+        <div class="session-toolbar">
+          <button class="text-button" id="exit-session" type="button">← トップへ</button>
+          <span id="session-name">10問だけ</span>
+          <button class="text-button" id="shuffle-session" type="button">シャッフル</button>
+        </div>
+
+        <article class="question-card" id="question-card">
+          <div class="question-meta">
+            <span class="category-badge" id="question-category"></span>
+            <span id="question-counter"></span>
+          </div>
+
+          <div class="prompt-block">
+            <p class="prompt-label">Speak this in English.</p>
+            <h2 id="practice-prompt" tabindex="-1"></h2>
+            <p class="speak-note">声に出してみましょう。</p>
+          </div>
+
+          <button class="reveal-button" id="reveal-answer" type="button" aria-expanded="false" aria-controls="answer-panel">
+            <span class="reveal-icon" aria-hidden="true">＋</span>
+            <span class="reveal-text">例を見る</span>
+          </button>
+
+          <div class="answer-panel" id="answer-panel" hidden>
+            <p class="answer-label">Example answer</p>
+            <p class="answer-english" id="answer-english" lang="en"></p>
+
+            <button class="audio-button" id="audio-button" type="button" aria-label="例文の音声を再生" aria-pressed="false">
+              <span class="audio-icon" aria-hidden="true">▶</span>
+              <span class="audio-label">Listen</span>
+              <span class="audio-state" aria-live="polite"></span>
+            </button>
+
+            <div class="answer-note">
+              <span>Note</span>
+              <p id="answer-note"></p>
+            </div>
+
+            <fieldset class="rating-fieldset">
+              <legend>今の感覚に近いものを選んでください</legend>
+              <div class="rating-buttons">
+                <button class="rating-button rating-button--easy" type="button" data-rating="easy">すぐ言えた</button>
+                <button class="rating-button rating-button--ok" type="button" data-rating="ok">少し考えた</button>
+                <button class="rating-button rating-button--hard" type="button" data-rating="hard">出なかった</button>
+              </div>
+            </fieldset>
+          </div>
+
+          <nav class="question-navigation" aria-label="問題の移動">
+            <button id="previous-question" type="button">← 前へ</button>
+            <button id="next-question" type="button">次へ →</button>
+          </nav>
+        </article>
+
+        <p class="keyboard-help"><kbd>Space</kbd> 例を見る・閉じる　<kbd>←</kbd><kbd>→</kbd> 問題を移動</p>
+      </section>
+
+      <section class="screen completion-screen" id="completion-screen" aria-labelledby="completion-title">
+        <div class="completion-card">
+          <span class="completion-mark" aria-hidden="true">✓</span>
+          <p class="section-kicker">Session complete</p>
+          <h2 id="completion-title" tabindex="-1">おつかれさまでした。</h2>
+          <p id="completion-message"></p>
+
+          <dl class="session-results">
+            <div><dt>すぐ言えた</dt><dd id="session-easy">0</dd></div>
+            <div><dt>少し考えた</dt><dd id="session-ok">0</dd></div>
+            <div><dt>出なかった</dt><dd id="session-hard">0</dd></div>
+          </dl>
+
+          <div class="completion-actions">
+            <button class="primary-button" id="another-ten" type="button">もう10問</button>
+            <button class="secondary-button" id="review-hard" type="button">苦手だけ練習</button>
+            <button class="text-button" id="completion-home" type="button">トップへ戻る</button>
+          </div>
+          <p class="empty-message" id="completion-message-note" role="status" hidden></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-meta">
+        <p>学習記録はこのブラウザにのみ保存されます。</p>
+        <p class="credits" aria-label="クレジット">
+          <span>Text: ChatGPT</span>
+          <span>Voice: ElevenLabs</span>
+          <span>Created by やわらか図書館学</span>
+        </p>
+        <p class="analytics-note">このサイトでは、利用状況の把握のためGoogle Analyticsを使用しています。</p>
+      </div>
+      <button class="reset-button" id="reset-progress" type="button">学習記録をリセット</button>
+    </footer>
+  </div>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

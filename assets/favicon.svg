@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Academic Library English Sprint</title>
+  <defs>
+    <linearGradient id="background" x1="72" y1="38" x2="438" y2="474" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#356d5b"/>
+      <stop offset="1" stop-color="#1e493d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#background)"/>
+  <circle cx="418" cy="92" r="76" fill="#8eaa9b" opacity=".24"/>
+  <path d="M160 118h192c25 0 46 20 46 45v37c0 23-18 42-40 45l-31 4-29 35-2-34H160c-25 0-46-20-46-45v-42c0-25 21-45 46-45Z" fill="#dfece5"/>
+  <circle cx="205" cy="184" r="10" fill="#285d4d"/>
+  <circle cx="256" cy="184" r="10" fill="#285d4d"/>
+  <circle cx="307" cy="184" r="10" fill="#285d4d"/>
+  <path d="M76 290c58-8 115 5 171 39v113c-52-31-109-42-171-33V290Z" fill="#f8f5ec"/>
+  <path d="M436 290c-58-8-115 5-171 39v113c52-31 109-42 171-33V290Z" fill="#f8f5ec"/>
+  <path d="M256 333v112" stroke="#b6c9be" stroke-width="16" stroke-linecap="round"/>
+  <path d="M97 320c47-2 92 11 130 34M415 320c-47-2-92 11-130 34" fill="none" stroke="#d2ddd5" stroke-width="12" stroke-linecap="round"/>
+</svg>

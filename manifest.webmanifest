@@ -1,0 +1,21 @@
+{
+  "name": "Academic Library English Sprint",
+  "short_name": "English Sprint",
+  "description": "大学図書館・学術情報流通について、英語でとっさに話す練習。",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#f5f4ef",
+  "theme_color": "#285d4d",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
