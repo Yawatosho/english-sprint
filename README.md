@@ -32,3 +32,10 @@ audio/q050.mp3
 ## Privacy
 
 学習記録はブラウザの `localStorage` にのみ保存され、外部サーバーには送信されません。ログインは使用していません。サイトの利用状況を把握するため、Google Analytics 4を使用しています。
+
+## Repository settings
+
+GitHubリポジトリ管理者向けの推奨設定です。
+
+- Description: `English speaking practice for academic libraries, open access, institutional repositories, and scholarly communication.`
+- Website: `https://yawatosho.github.io/english-sprint/`

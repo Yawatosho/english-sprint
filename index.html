@@ -4,15 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="大学図書館・オープンアクセス・機関リポジトリについて、英語でとっさに話す練習ができるWebアプリです。">
-  <meta name="theme-color" content="#f5f4ef">
+  <meta name="theme-color" content="#f4f3ee">
+  <link rel="canonical" href="https://yawatosho.github.io/english-sprint/">
   <meta property="og:title" content="Academic Library English Sprint">
   <meta property="og:description" content="学術情報流通について、自分の英語で声に出すためのスピーキング練習。">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/ogp.png">
+  <meta property="og:site_name" content="Academic Library English Sprint">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:url" content="https://yawatosho.github.io/english-sprint/">
+  <meta property="og:image" content="https://yawatosho.github.io/english-sprint/assets/ogp.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="本と会話をモチーフにしたAcademic Library English Sprintのイラスト">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Academic Library English Sprint">
+  <meta name="twitter:description" content="学術情報流通について、自分の英語で声に出すためのスピーキング練習。">
+  <meta name="twitter:image" content="https://yawatosho.github.io/english-sprint/assets/ogp.png">
+  <meta name="twitter:image:alt" content="本と会話をモチーフにしたAcademic Library English Sprintのイラスト">
   <title>Academic Library English Sprint</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
@@ -32,7 +40,6 @@
   <div class="app-shell">
     <header class="site-header">
       <button class="brand-button" id="home-button" type="button" aria-label="トップ画面へ戻る">
-        <span class="brand-mark" aria-hidden="true">A</span>
         <span class="brand-name">Academic Library<br>English Sprint</span>
       </button>
       <div class="progress-summary" id="header-stats" aria-live="polite">Practiced 0 / 50</div>
@@ -41,7 +48,6 @@
     <main id="main">
       <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
         <div class="intro">
-          <p class="eyebrow">Speaking practice for academic libraries</p>
           <h1 id="home-title">英語で、とっさに<br>話すための小さな練習。</h1>
           <p class="intro-copy">大学図書館・オープンアクセス・機関リポジトリについて、短く英語で話す練習です。</p>
           <p class="intro-note">正解を暗記する必要はありません。まず、自分の英語で声に出してみましょう。</p>
@@ -49,23 +55,19 @@
 
         <div class="start-panel" aria-labelledby="start-title">
           <div class="section-heading">
-            <p class="section-kicker">Today’s practice</p>
             <h2 id="start-title">練習を始める</h2>
           </div>
 
           <div class="mode-grid">
             <button class="mode-button mode-button--primary" id="start-ten" type="button">
-              <span class="mode-icon" aria-hidden="true">10</span>
               <span><strong>10問だけ</strong><small>短時間でランダムに</small></span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
             <button class="mode-button" id="start-all" type="button">
-              <span class="mode-icon mode-icon--all" aria-hidden="true">50</span>
               <span><strong>すべて</strong><small>全50問を通して</small></span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
             <button class="mode-button" id="start-hard" type="button">
-              <span class="mode-icon mode-icon--review" aria-hidden="true">↺</span>
               <span><strong>苦手だけ</strong><small>「出なかった」を復習</small></span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
@@ -90,7 +92,6 @@
 
         <aside class="home-progress" aria-labelledby="progress-title">
           <div>
-            <p class="section-kicker">Your record</p>
             <h2 id="progress-title">これまでの練習</h2>
           </div>
           <div class="record-total" id="record-total">Practiced 0 / 50</div>
@@ -162,15 +163,14 @@
 
       <section class="screen completion-screen" id="completion-screen" aria-labelledby="completion-title">
         <div class="completion-card">
-          <span class="completion-mark" aria-hidden="true">✓</span>
-          <p class="section-kicker">Session complete</p>
-          <h2 id="completion-title" tabindex="-1">おつかれさまでした。</h2>
+          <h2 id="completion-title" tabindex="-1">練習終了</h2>
           <p id="completion-message"></p>
 
           <dl class="session-results">
             <div><dt>すぐ言えた</dt><dd id="session-easy">0</dd></div>
             <div><dt>少し考えた</dt><dd id="session-ok">0</dd></div>
             <div><dt>出なかった</dt><dd id="session-hard">0</dd></div>
+            <div><dt>スキップ</dt><dd id="session-skip">0</dd></div>
           </dl>
 
           <div class="completion-actions">

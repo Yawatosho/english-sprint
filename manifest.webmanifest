@@ -4,7 +4,7 @@
   "description": "大学図書館・学術情報流通について、英語でとっさに話す練習。",
   "start_url": "./",
   "display": "browser",
-  "background_color": "#f5f4ef",
+  "background_color": "#f4f3ee",
   "theme_color": "#285d4d",
   "icons": [
     {

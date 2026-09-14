@@ -42,6 +42,7 @@
     sessionEasy: document.getElementById("session-easy"),
     sessionOk: document.getElementById("session-ok"),
     sessionHard: document.getElementById("session-hard"),
+    sessionSkip: document.getElementById("session-skip"),
     completionNote: document.getElementById("completion-message-note")
   };
 
@@ -107,7 +108,8 @@
     return {
       easy: values.filter((rating) => rating === "easy").length,
       ok: values.filter((rating) => rating === "ok").length,
-      hard: values.filter((rating) => rating === "hard").length
+      hard: values.filter((rating) => rating === "hard").length,
+      skip: values.filter((rating) => rating === "skip").length
     };
   }
 
@@ -318,8 +320,14 @@
     if (focusPrompt) elements.prompt.focus({ preventScroll: true });
   }
 
-  function moveQuestion(direction) {
+  function moveQuestion(direction, recordSkip = false) {
     if (!session) return;
+    if (direction > 0 && recordSkip) {
+      const question = session.items[session.index];
+      if (!session.ratings.has(question.id)) {
+        session.ratings.set(question.id, "skip");
+      }
+    }
     const nextIndex = session.index + direction;
     if (nextIndex < 0) return;
     if (nextIndex >= session.items.length) {
@@ -337,17 +345,23 @@
     session.ratings.set(question.id, rating);
     saveProgress();
     renderProgress();
-    moveQuestion(1);
+    moveQuestion(1, false);
   }
 
   function completeSession() {
     if (!session) return;
     stopAudio();
+    session.items.forEach((question) => {
+      if (!session.ratings.has(question.id)) {
+        session.ratings.set(question.id, "skip");
+      }
+    });
     const counts = countRatings(Array.from(session.ratings.values()));
-    elements.completionMessage.textContent = `${session.items.length}問のセッションを終えました。`;
+    elements.completionMessage.textContent = `${session.items.length}問、おつかれさまでした。`;
     elements.sessionEasy.textContent = counts.easy;
     elements.sessionOk.textContent = counts.ok;
     elements.sessionHard.textContent = counts.hard;
+    elements.sessionSkip.textContent = counts.skip;
     showScreen(elements.completion);
     document.getElementById("completion-title").focus?.({ preventScroll: true });
   }
@@ -412,7 +426,7 @@
   });
   elements.audioButton.addEventListener("click", playAudio);
   elements.previous.addEventListener("click", () => moveQuestion(-1));
-  elements.next.addEventListener("click", () => moveQuestion(1));
+  elements.next.addEventListener("click", () => moveQuestion(1, true));
   elements.shuffleSession.addEventListener("click", () => {
     if (!session) return;
     session.items = shuffle(session.items);
@@ -430,7 +444,7 @@
       setAnswerVisible(elements.answerPanel.hidden);
     } else if (event.key === "ArrowRight") {
       event.preventDefault();
-      moveQuestion(1);
+      moveQuestion(1, true);
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
       moveQuestion(-1);
