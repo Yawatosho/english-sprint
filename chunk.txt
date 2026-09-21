@@ -1,0 +1,110 @@
+. 話を始める・自分の大学について述べる
+At our university, — 本学では
+In our case, — 私たちの場合は
+In Japan, — 日本では
+In our repository, — 本学のリポジトリでは
+From our perspective, — 私たちの立場では
+In terms of open access, — OAの観点では
+When it comes to OA, — OAについて言えば
+As for our workflow, — ワークフローについては
+At the moment, — 現時点では
+So far, — これまでのところ
+2. 説明をつなぐ
+Basically, — 基本的には
+In general, — 一般的には
+For example, — 例えば
+For instance, — 例えば
+In other words, — 言い換えると
+In that case, — その場合
+If necessary, — 必要であれば
+If possible, — 可能であれば
+Depending on the situation, — 状況によって
+Depending on the policy, — 方針によって
+3. 手順・ワークフロー
+The first step is — 最初のステップは
+The next step is — 次のステップは
+After that, — その後
+Before publication, — 公開前に
+After publication, — 公開後に
+Once we receive it, — 受け取ったら
+Once it is approved, — 承認されたら
+Before we publish it, — 公開する前に
+As part of the workflow, — ワークフローの一環として
+through an online form — オンラインフォームを通じて
+4. 登録・申請
+submit a request — 申請する
+submit an article — 論文を提出する
+deposit an article — 論文を登録する
+deposit research outputs — 研究成果を登録する
+deposit research data — 研究データを登録する
+upload a manuscript — 原稿をアップロードする
+provide the manuscript — 原稿を提供する
+receive a request — 申請を受ける
+receive an application — 申請を受ける
+handle the deposit — 登録作業を担当する
+5. 出版社ポリシー
+check the publisher’s policy — 出版社ポリシーを確認する
+check the OA policy — OAポリシーを確認する
+check the conditions — 条件を確認する
+check the license — ライセンスを確認する
+under the publisher’s policy — 出版社の方針のもとで
+according to the policy — ポリシーによれば
+allowed by the publisher — 出版社に許可された
+permitted for deposit — 登録が許可された
+subject to an embargo — エンバーゴの対象となる
+meet the requirements — 要件を満たす
+6. 論文のバージョン
+the accepted manuscript — 著者最終稿
+the published version — 出版版
+the version of record — Version of Record
+the author’s manuscript — 著者原稿
+the final manuscript — 最終原稿
+the permitted version — 許可された版
+which version to use — どの版を使うか
+which version is allowed — どの版が許可されるか
+the appropriate version — 適切な版
+the latest version — 最新版
+7. エンバーゴ・公開
+set an embargo — エンバーゴを設定する
+during the embargo period — エンバーゴ期間中
+after the embargo period — エンバーゴ期間終了後
+once the embargo expires — エンバーゴ終了後
+without an embargo — エンバーゴなしで
+make it publicly available — 公開する
+make it openly available — オープンにする
+provide open access — OAを提供する
+publish it in the repository — リポジトリで公開する
+available through the repository — リポジトリを通じて利用可能な
+8. OAについて説明する
+open access to research — 研究へのオープンアクセス
+open access to articles — 論文へのOA
+green open access — グリーンOA
+gold open access — ゴールドOA
+immediate open access — 即時OA
+openly available online — オンラインでOAになっている
+on the publisher’s website — 出版社サイト上で
+through the institutional repository — 機関リポジトリを通じて
+increase research visibility — 研究の可視性を高める
+improve access to research — 研究へのアクセスを改善する
+9. 現状・課題を説明する
+We’re still working on — まだ〜に取り組んでいます
+We’re currently developing — 現在〜を整備しています
+We’re still developing — まだ整備中です
+We’ve recently started — 最近始めました
+We recently introduced — 最近導入しました
+We haven’t done much yet — まだあまりできていません
+We have limited experience with — 〜の経験はまだ限られています
+One challenge is — 課題の一つは
+One issue is — 問題の一つは
+A major challenge is — 大きな課題は
+10. 相手に質問する
+How do you handle — 〜にはどう対応していますか
+How does it work — どのような仕組みですか
+What is your approach to — 〜への取り組みはどのようなものですか
+What kind of support — どのような支援
+What role does the library play — 図書館はどんな役割を担っていますか
+Do researchers need to — 研究者は〜する必要がありますか
+Are researchers required to — 研究者には〜が求められていますか
+Who is responsible for — 誰が〜を担当していますか
+Could you tell me more about — 〜についてもう少し教えていただけますか
+I’d like to learn more about — 〜についてもっと知りたいです

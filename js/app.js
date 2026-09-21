@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "als_scores";
+  const CHUNK_STORAGE_KEY = "als_chunk_scores";
   const STORAGE_SCHEMA_KEY = "als_scores_schema";
   const STORAGE_SCHEMA = "2";
   const VALID_RATINGS = new Set(["easy", "ok", "hard"]);
@@ -17,6 +18,12 @@
     recordEasy: document.getElementById("record-easy"),
     recordOk: document.getElementById("record-ok"),
     recordHard: document.getElementById("record-hard"),
+    resetProgress: document.getElementById("reset-progress"),
+    sentenceSelector: document.getElementById("select-sentences"),
+    chunkSelector: document.getElementById("select-chunks"),
+    introCopy: document.getElementById("intro-copy"),
+    introNote: document.getElementById("intro-note"),
+    allModeDescription: document.getElementById("all-mode-description"),
     categorySelect: document.getElementById("category-select"),
     shuffleOption: document.getElementById("shuffle-option"),
     homeMessage: document.getElementById("home-message"),
@@ -26,11 +33,16 @@
     questionCategory: document.getElementById("question-category"),
     questionCounter: document.getElementById("question-counter"),
     prompt: document.getElementById("practice-prompt"),
+    promptLabel: document.getElementById("prompt-label"),
     reveal: document.getElementById("reveal-answer"),
     revealIcon: document.querySelector("#reveal-answer .reveal-icon"),
     revealText: document.querySelector("#reveal-answer .reveal-text"),
     answerPanel: document.getElementById("answer-panel"),
     answerEnglish: document.getElementById("answer-english"),
+    answerLabel: document.getElementById("answer-label"),
+    chunkExample: document.getElementById("chunk-example"),
+    chunkExampleText: document.getElementById("chunk-example-text"),
+    answerNoteWrap: document.getElementById("answer-note-wrap"),
     answerNote: document.getElementById("answer-note"),
     audioButton: document.getElementById("audio-button"),
     audioIcon: document.querySelector("#audio-button .audio-icon"),
@@ -46,12 +58,19 @@
     completionNote: document.getElementById("completion-message-note")
   };
 
-  let progress = loadProgress();
+  let sentenceProgress = loadProgress();
+  let chunkProgress = loadChunkProgress();
+  let material = "sentences";
+  let progress = sentenceProgress;
   let session = null;
   let currentAudio = null;
   let audioStatus = "idle";
 
-  function sanitiseProgress(value) {
+  function currentItems() {
+    return material === "chunks" ? CHUNKS : QUESTIONS;
+  }
+
+  function sanitiseProgress(value, total = QUESTIONS.length) {
     if (!value || typeof value !== "object" || Array.isArray(value)) return {};
 
     return Object.fromEntries(
@@ -59,7 +78,7 @@
         const numericId = Number(id);
         return Number.isInteger(numericId)
           && numericId >= 1
-          && numericId <= QUESTIONS.length
+          && numericId <= total
           && VALID_RATINGS.has(rating);
       })
     );
@@ -94,10 +113,18 @@
     }
   }
 
+  function loadChunkProgress() {
+    try {
+      return sanitiseProgress(JSON.parse(localStorage.getItem(CHUNK_STORAGE_KEY) || "{}"), CHUNKS.length);
+    } catch (error) {
+      return {};
+    }
+  }
+
   function saveProgress() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-      localStorage.setItem(STORAGE_SCHEMA_KEY, STORAGE_SCHEMA);
+      localStorage.setItem(material === "chunks" ? CHUNK_STORAGE_KEY : STORAGE_KEY, JSON.stringify(progress));
+      if (material === "sentences") localStorage.setItem(STORAGE_SCHEMA_KEY, STORAGE_SCHEMA);
     } catch (error) {
       // The session continues in memory when storage is unavailable.
     }
@@ -116,7 +143,7 @@
   function renderProgress() {
     const counts = countRatings(progress);
     const practiced = Object.keys(progress).length;
-    const totalText = `Practiced ${practiced} / ${QUESTIONS.length}`;
+    const totalText = `Practiced ${practiced} / ${currentItems().length}`;
 
     elements.headerStats.textContent = totalText;
     elements.recordTotal.textContent = totalText;
@@ -175,23 +202,23 @@
   }
 
   function startTen() {
-    startSession(shuffle(QUESTIONS).slice(0, 10), "10問だけ", "ten");
+    startSession(shuffle(currentItems()).slice(0, 10), "10問だけ", "ten");
   }
 
   function startAll() {
-    const items = elements.shuffleOption.checked ? shuffle(QUESTIONS) : [...QUESTIONS];
+    const items = elements.shuffleOption.checked ? shuffle(currentItems()) : [...currentItems()];
     startSession(items, "すべて", "all");
   }
 
   function startCategory() {
     const category = elements.categorySelect.value;
-    const selected = QUESTIONS.filter((question) => question.category === category);
+    const selected = currentItems().filter((question) => question.category === category);
     const items = elements.shuffleOption.checked ? shuffle(selected) : selected;
     startSession(items, category, "category");
   }
 
   function startHard(messageElement = elements.homeMessage) {
-    const selected = QUESTIONS.filter((question) => progress[String(question.id)] === "hard");
+    const selected = currentItems().filter((question) => progress[String(question.id)] === "hard");
     if (!selected.length) {
       showMessage(messageElement, "まだ「出なかった」と記録された問題はありません。");
       return;
@@ -236,6 +263,7 @@
     if (!session || currentAudio || audioStatus === "unavailable") return;
 
     const question = session.items[session.index];
+    if (!question.audio) return;
     const audio = new Audio();
     currentAudio = audio;
     audioStatus = "loading";
@@ -293,7 +321,7 @@
     elements.reveal.classList.toggle("is-open", visible);
     elements.revealIcon.textContent = visible ? "−" : "＋";
     elements.revealText.textContent = visible ? "例を閉じる" : "例を見る";
-    if (visible) {
+    if (visible && session.items[session.index].audio) {
       prepareAudio();
     } else {
       stopAudio();
@@ -309,7 +337,11 @@
     elements.questionCounter.textContent = `${session.index + 1} / ${session.items.length}`;
     elements.prompt.textContent = question.ja;
     elements.answerEnglish.textContent = question.en;
-    elements.answerNote.textContent = question.note;
+    elements.chunkExampleText.textContent = question.example || "";
+    elements.chunkExample.hidden = !question.example;
+    elements.answerNote.textContent = question.note || "";
+    elements.answerNoteWrap.hidden = !question.note;
+    elements.audioButton.hidden = !question.audio;
     elements.previous.disabled = session.index === 0;
     elements.next.textContent = session.index === session.items.length - 1 ? "終了 →" : "次へ →";
     setAnswerVisible(false);
@@ -376,11 +408,14 @@
   }
 
   function resetProgress() {
-    if (!window.confirm("学習記録をすべてリセットしますか？")) return;
+    const materialName = material === "chunks" ? "チャンク" : "文章";
+    if (!window.confirm(`${materialName}の学習記録をリセットしますか？`)) return;
     progress = {};
+    if (material === "chunks") chunkProgress = progress;
+    else sentenceProgress = progress;
     try {
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.setItem(STORAGE_SCHEMA_KEY, STORAGE_SCHEMA);
+      localStorage.removeItem(material === "chunks" ? CHUNK_STORAGE_KEY : STORAGE_KEY);
+      if (material === "sentences") localStorage.setItem(STORAGE_SCHEMA_KEY, STORAGE_SCHEMA);
     } catch (error) {
       // The in-memory record has still been reset.
     }
@@ -402,7 +437,8 @@
   }
 
   function populateCategories() {
-    const categories = [...new Set(QUESTIONS.map((question) => question.category))];
+    elements.categorySelect.replaceChildren();
+    const categories = [...new Set(currentItems().map((question) => question.category))];
     categories.forEach((category) => {
       const option = document.createElement("option");
       option.value = category;
@@ -411,6 +447,30 @@
     });
   }
 
+  function selectMaterial(nextMaterial) {
+    material = nextMaterial;
+    progress = material === "chunks" ? chunkProgress : sentenceProgress;
+    elements.sentenceSelector.setAttribute("aria-pressed", String(material === "sentences"));
+    elements.chunkSelector.setAttribute("aria-pressed", String(material === "chunks"));
+    elements.introCopy.textContent = material === "chunks"
+      ? "大学図書館やオープンアクセスの話題で使える短い英語のかたまりを練習します。"
+      : "大学図書館・オープンアクセス・機関リポジトリについて、短く英語で話す練習です。";
+    elements.introNote.textContent = material === "chunks"
+      ? "日本語を見て、英語のチャンクを声に出してみましょう。チャンクに音声はありません。"
+      : "正解を暗記する必要はありません。まず、自分の英語で声に出してみましょう。";
+    elements.allModeDescription.textContent = `全${currentItems().length}問を通して`;
+    elements.resetProgress.textContent = material === "chunks"
+      ? "チャンクの学習記録をリセット"
+      : "文章の学習記録をリセット";
+    elements.promptLabel.textContent = material === "chunks" ? "Say this in English." : "Speak this in English.";
+    elements.answerLabel.textContent = material === "chunks" ? "English chunk" : "Example answer";
+    populateCategories();
+    hideMessage(elements.homeMessage);
+    renderProgress();
+  }
+
+  elements.sentenceSelector.addEventListener("click", () => selectMaterial("sentences"));
+  elements.chunkSelector.addEventListener("click", () => selectMaterial("chunks"));
   document.getElementById("start-ten").addEventListener("click", startTen);
   document.getElementById("start-all").addEventListener("click", startAll);
   document.getElementById("start-hard").addEventListener("click", () => startHard());
@@ -420,7 +480,7 @@
   document.getElementById("completion-home").addEventListener("click", showHome);
   document.getElementById("another-ten").addEventListener("click", startTen);
   document.getElementById("review-hard").addEventListener("click", () => startHard(elements.completionNote));
-  document.getElementById("reset-progress").addEventListener("click", resetProgress);
+  elements.resetProgress.addEventListener("click", resetProgress);
   elements.reveal.addEventListener("click", () => {
     setAnswerVisible(elements.answerPanel.hidden);
   });
@@ -451,7 +511,6 @@
     }
   });
 
-  populateCategories();
-  renderProgress();
+  selectMaterial("sentences");
   showHome();
 })();

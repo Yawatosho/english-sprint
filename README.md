@@ -5,6 +5,7 @@
 ## Features
 
 - 50 speaking prompts
+- 100 chunks for short-expression practice (no audio)
 - Example answers
 - Audio playback
 - Category practice
@@ -24,6 +25,10 @@ audio/q050.mp3
 ```
 
 音声ファイルが未配置または読み込めない場合、例文はそのまま利用でき、再生ボタンだけが無効になります。音声の自動再生は行いません。
+
+## Practice materials
+
+トップ画面で「文章を練習」と「チャンクを練習」を切り替えられます。チャンクは `chunk.txt` の100件を `js/chunks.js` に収録し、各チャンクに使用例を1文添えています。チャンクに音声はありません。10問・全問・苦手・カテゴリ別の練習と自己評価は両教材で使えます。学習記録は教材ごとに分けて保存します。
 
 ## Hosting
 

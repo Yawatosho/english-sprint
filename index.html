@@ -49,8 +49,13 @@
       <section class="screen home-screen is-active" id="home-screen" aria-labelledby="home-title">
         <div class="intro">
           <h1 id="home-title">英語で、とっさに<br>話すための小さな練習。</h1>
-          <p class="intro-copy">大学図書館・オープンアクセス・機関リポジトリについて、短く英語で話す練習です。</p>
-          <p class="intro-note">正解を暗記する必要はありません。まず、自分の英語で声に出してみましょう。</p>
+          <p class="intro-copy" id="intro-copy">大学図書館・オープンアクセス・機関リポジトリについて、短く英語で話す練習です。</p>
+          <p class="intro-note" id="intro-note">正解を暗記する必要はありません。まず、自分の英語で声に出してみましょう。</p>
+        </div>
+
+        <div class="material-switch" role="group" aria-label="練習する教材">
+          <button type="button" id="select-sentences" aria-pressed="true">文章を練習</button>
+          <button type="button" id="select-chunks" aria-pressed="false">チャンクを練習</button>
         </div>
 
         <div class="start-panel" aria-labelledby="start-title">
@@ -64,7 +69,7 @@
               <span class="arrow" aria-hidden="true">→</span>
             </button>
             <button class="mode-button" id="start-all" type="button">
-              <span><strong>すべて</strong><small>全50問を通して</small></span>
+              <span><strong>すべて</strong><small id="all-mode-description">全50問を通して</small></span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
             <button class="mode-button" id="start-hard" type="button">
@@ -117,7 +122,7 @@
           </div>
 
           <div class="prompt-block">
-            <p class="prompt-label">Speak this in English.</p>
+            <p class="prompt-label" id="prompt-label">Speak this in English.</p>
             <h2 id="practice-prompt" tabindex="-1"></h2>
             <p class="speak-note">声に出してみましょう。</p>
           </div>
@@ -128,8 +133,13 @@
           </button>
 
           <div class="answer-panel" id="answer-panel" hidden>
-            <p class="answer-label">Example answer</p>
+            <p class="answer-label" id="answer-label">Example answer</p>
             <p class="answer-english" id="answer-english" lang="en"></p>
+
+            <div class="chunk-example" id="chunk-example" hidden>
+              <span>使用例</span>
+              <p id="chunk-example-text" lang="en"></p>
+            </div>
 
             <button class="audio-button" id="audio-button" type="button" aria-label="例文の音声を再生" aria-pressed="false">
               <span class="audio-icon" aria-hidden="true">▶</span>
@@ -137,7 +147,7 @@
               <span class="audio-state" aria-live="polite"></span>
             </button>
 
-            <div class="answer-note">
+            <div class="answer-note" id="answer-note-wrap">
               <span>Note</span>
               <p id="answer-note"></p>
             </div>
@@ -193,11 +203,12 @@
         </p>
         <p class="analytics-note">このサイトでは、利用状況の把握のためGoogle Analyticsを使用しています。</p>
       </div>
-      <button class="reset-button" id="reset-progress" type="button">学習記録をリセット</button>
+      <button class="reset-button" id="reset-progress" type="button">文章の学習記録をリセット</button>
     </footer>
   </div>
 
   <script src="js/questions.js"></script>
+  <script src="js/chunks.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
